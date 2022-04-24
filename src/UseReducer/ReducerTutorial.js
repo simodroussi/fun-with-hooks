@@ -1,32 +1,42 @@
-import React, { useReducer } from "react";
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "INCREMENT":
-      return { count: state.count + 1, showText: state.showText };
-    case "toggleShowText":
-      return { count: state.count, showText: !state.showText };
-    default:
-      return state;
-  }
-};
+import React, { useReducer } from 'react';
 
 const ReducerTutorial = () => {
-  const [state, dispatch] = useReducer(reducer, { count: 0, showText: true });
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'increment':
+        return { ...state, count: state.count + 1 };
+      case 'changeColor':
+        if (state.count % 2 === 0) {
+          return { ...state, color: 'red' };
+        }
+        return { ...state, color: 'black' };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, { count: 0, color: 'red' });
 
   return (
     <div>
-      <h1>{state.count}</h1>
-      <button
-        onClick={() => {
-          dispatch({ type: "INCREMENT" });
-          dispatch({ type: "toggleShowText" });
+      <h1>usReducer</h1>
+      <p
+        style={{
+          color: state.color,
+          fontSize: '30px',
+          fontWeight: 'bold',
         }}
       >
-        Click Here
+        {state.count}
+      </p>
+      <button
+        onClick={() => {
+          dispatch({ type: 'increment' });
+          dispatch({ type: 'changeColor' });
+        }}
+      >
+        ++
       </button>
-
-      {state.showText && <p>This is a text</p>}
     </div>
   );
 };

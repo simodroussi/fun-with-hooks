@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function EffectTutorial() {
-  const [data, setData] = useState("");
-  const [count, setCount] = useState(0);
+const randomInt = () => {
+  return Math.floor(Math.random() * 500);
+};
+
+const EffectTutorial = () => {
+  const [randomIndex, setRandomIndex] = useState(randomInt());
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/comments")
-      .then((response) => {
-        setData(response.data[0].email);
-        console.log("API WAS CALLED");
-      });
+    setRandomIndex(randomInt());
+    axios.get('https://jsonplaceholder.typicode.com/comments').then((res) => {
+      setData(res.data);
+      console.log('api was callled');
+    });
   }, []);
 
   return (
     <div>
-      Hello World
-      <h1>{data}</h1>
-      <h1>{count}</h1>
-      <button
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
-        Click
+      <h1>useEffect</h1>
+      <h2>{data[randomIndex]?.email}</h2>
+      <button onClick={() => setRandomIndex(randomInt())}>
+        Show random email
       </button>
     </div>
   );
-}
+};
 
 export default EffectTutorial;

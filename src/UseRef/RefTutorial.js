@@ -1,18 +1,33 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from 'react';
 
-function RefTutorial() {
-  const inputRef = useRef(null);
-
-  const onClick = () => {
-    inputRef.current.value = "";
-  };
+const RefTutorial = () => {
+  const divRef = useRef();
   return (
     <div>
-      <h1>Pedro</h1>
-      <input type="text" placeholder="Ex..." ref={inputRef} />
-      <button onClick={onClick}>Change Name</button>
+      <h1>useRef</h1>
+      <div
+        ref={divRef}
+        style={{
+          height: '100px',
+          width: '100px',
+          margin: '20px auto',
+          backgroundColor: 'black',
+        }}
+      ></div>
+      <label htmlFor="increments">Change box color:&nbsp;</label>
+      <select
+        name="changeBG"
+        id="changeBG"
+        onChange={(e) =>
+          (divRef.current.style.backgroundColor = e.target.value)
+        }
+      >
+        <option value="black">Black</option>
+        <option value="yellow">Yellow</option>
+        <option value="red">Red</option>
+      </select>
     </div>
   );
-}
+};
 
 export default RefTutorial;
